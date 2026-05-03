@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StarLand – Onboarding</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ──────────────────────────────────────────
+       CSS VARIABLES
+    ────────────────────────────────────────── */
+    :root {
+      --violet:       #7c3aed;
+      --violet-dark:  #6d28d9;
+      --violet-light: #a78bfa;
+      --violet-soft:  #ede9fe;
+      --gray-bg:      #f3f4f8;
+      --white:        #ffffff;
+      --border:       #e5e7eb;
+      --text:         #1e1b2e;
+      --muted:        #9ca3af;
+      --done-line:    #c4b5fd;
+    }
+
+    /* ──────────────────────────────────────────
+       BASE
+    ────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--gray-bg);
+      min-height: 100vh;
+      color: var(--text);
+      margin: 0;
+    }
+
+    /* ──────────────────────────────────────────
+       NAVBAR
+    ────────────────────────────────────────── */
+    .sl-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .sl-brand {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .sl-brand .star-box {
+      width: 34px; height: 34px;
+      background: var(--violet-soft);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--violet);
+      font-size: 1rem;
+    }
+
+    .sl-user {
+      display: flex; align-items: center; gap: .55rem;
+      font-size: .875rem; font-weight: 600; color: var(--text);
+    }
+    .sl-avatar {
+      width: 34px; height: 34px;
+      background: var(--violet-soft);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--violet); font-size: .85rem;
+    }
+
+    /* ──────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────── */
+    .sl-hero {
+      text-align: center;
+      padding: 2.25rem 1rem 1.25rem;
+    }
+    .sl-hero h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      margin: 0;
+    }
+    .sl-hero p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin: .35rem 0 0;
+    }
+
+    /* ──────────────────────────────────────────
+       LAYOUT WRAPPER
+    ────────────────────────────────────────── */
+    .sl-wrapper {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    /* ──────────────────────────────────────────
+       SIDEBAR
+    ────────────────────────────────────────── */
+    .sl-sidebar {
+      width: 235px;
+      flex-shrink: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem .9rem;
+      position: sticky;
+      top: 76px;
+    }
+
+    /* mobile: sidebar becomes horizontal scroll strip */
+    @media (max-width: 767.98px) {
+      .sl-wrapper {
+        flex-direction: column;
+        padding: 0 .75rem 2.5rem;
+      }
+      .sl-sidebar {
+        width: 100%;
+        position: static;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: .75rem .5rem;
+        border-radius: 12px;
+      }
+      .sl-steps {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: .25rem;
+      }
+      .sl-step {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: .3rem !important;
+        padding: .5rem .6rem !important;
+        min-width: 72px;
+        text-align: center;
+      }
+      .sl-step::after { display: none !important; }
+      .step-label {
+        font-size: .7rem !important;
+        white-space: normal !important;
+        text-align: center;
+        line-height: 1.2;
+      }
+    }
+
+    .sl-steps {
+      list-style: none;
+      margin: 0; padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sl-step {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .55rem .5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .sl-step:hover { background: var(--violet-soft); }
+
+    /* connector line */
+    .sl-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 26px; top: 44px;
+      width: 2px; height: 12px;
+      background: var(--border);
+      border-radius: 2px;
+    }
+    .sl-step.done:not(:last-child)::after { background: var(--done-line); }
+
+    /* step icon bubble */
+    .step-icon {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--violet-soft);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--violet);
+      font-size: .85rem;
+      transition: background .2s, color .2s;
+    }
+    .sl-step.active .step-icon,
+    .sl-step.done .step-icon {
+      background: var(--violet);
+      color: var(--white);
+    }
+
+    .step-label {
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color .15s;
+    }
+    .sl-step.active .step-label { color: var(--violet); font-weight: 700; }
+    .sl-step.done .step-label  { color: var(--text);   font-weight: 600; }
+
+    /* ──────────────────────────────────────────
+       MAIN CARD
+    ────────────────────────────────────────── */
+    .sl-card {
+      flex: 1;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      min-width: 0;
+    }
+
+    @media (max-width: 767.98px) {
+      .sl-card { padding: 1.25rem 1rem; }
+    }
+
+    /* ── Progress ── */
+    .sl-progress-track {
+      height: 6px;
+      background: #e9d5ff;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .sl-progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-light));
+      transition: width .4s ease;
+    }
+    .sl-progress-pct {
+      text-align: right;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: .3rem;
+    }
+
+    /* ── Section title ── */
+    .sl-section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin: 1.5rem 0 1.25rem;
+    }
+
+    /* ── Form fields ── */
+    .sl-field {
+      margin-bottom: .9rem;
+    }
+    .sl-input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: .72rem 1rem;
+      font-family: inherit;
+      font-size: .9rem;
+      color: var(--text);
+      background: #fafafa;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    .sl-input::placeholder { color: var(--muted); }
+    .sl-input:focus {
+      border-color: var(--violet-light);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.12);
+      background: var(--white);
+    }
+
+    /* ── Row for phone + email ── */
+    .sl-row {
+      display: flex;
+      gap: .75rem;
+    }
+    .sl-row .sl-field { flex: 1; margin-bottom: 0; }
+
+    @media (max-width: 479.98px) {
+      .sl-row { flex-direction: column; gap: .9rem; }
+    }
+
+    /* ── Footer ── */
+    .sl-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .btn-nav {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color .15s, color .15s, transform .1s;
+      font-size: .95rem;
+    }
+    .btn-nav:hover:not(:disabled) {
+      border-color: var(--violet-light);
+      color: var(--violet);
+      transform: scale(1.08);
+    }
+    .btn-nav:disabled { opacity: .4; cursor: not-allowed; }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--violet-dark), var(--violet));
+      color: var(--white);
+      border: none;
+      border-radius: 99px;
+      padding: .65rem 2.4rem;
+      font-size: .95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(124,58,237,.3);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 22px rgba(124,58,237,.38);
+    }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ── Toast ── */
+    .sl-toast {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      background: var(--violet);
+      color: var(--white);
+      border-radius: 12px;
+      padding: .75rem 1.25rem;
+      font-size: .875rem; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(124,58,237,.35);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity .3s, transform .3s;
+      z-index: 999;
+    }
+    .sl-toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── Step panels ── */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    /* fade-in animation when switching steps */
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .step-panel.active { animation: fadeSlide .25s ease; }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav class="sl-nav">
+    <a href="#" class="sl-brand">
+      <div class="star-box"><i class="bi bi-star-fill"></i></div>
+      StarLand
+    </a>
+    <div class="sl-user">
+      <span class="d-none d-sm-inline">Hi, Kavita Khati</span>
+      <div class="sl-avatar"><i class="bi bi-person-fill"></i></div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <div class="sl-hero">
+    <h1>Welcome to StarLand</h1>
+    <p>Complete the 7 steps to get started</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       LAYOUT
+  ══════════════════════════════════════════ -->
+  <div class="sl-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sl-sidebar">
+      <ul class="sl-steps" id="stepList">
+
+        <li class="sl-step" data-index="0">
+          <div class="step-icon"><i class="bi bi-building"></i></div>
+          <span class="step-label">Organization Profile</span>
+        </li>
+
+        <li class="sl-step" data-index="1">
+          <div class="step-icon"><i class="bi bi-geo-alt"></i></div>
+          <span class="step-label">Territories and Sites</span>
+        </li>
+
+        <li class="sl-step" data-index="2">
+          <div class="step-icon"><i class="bi bi-people"></i></div>
+          <span class="step-label">Roles and Employees</span>
+        </li>
+
+        <li class="sl-step" data-index="3">
+          <div class="step-icon"><i class="bi bi-box-seam"></i></div>
+          <span class="step-label">Products and Services</span>
+        </li>
+
+        <li class="sl-step" data-index="4">
+          <div class="step-icon"><i class="bi bi-calendar3"></i></div>
+          <span class="step-label">Scheduler Settings</span>
+        </li>
+
+        <li class="sl-step" data-index="5">
+          <div class="step-icon"><i class="bi bi-credit-card"></i></div>
+          <span class="step-label">Payment Settings</span>
+        </li>
+
+        <li class="sl-step" data-index="6">
+          <div class="step-icon"><i class="bi bi-file-earmark-text"></i></div>
+          <span class="step-label">Create Work Order</span>
+        </li>
+
+      </ul>
+    </aside>
+
+    <!-- MAIN CARD -->
+    <main class="sl-card">
+
+      <!-- Progress bar -->
+      <div>
+        <div class="sl-progress-track">
+          <div class="sl-progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="sl-progress-pct" id="progressPct">0%</div>
+      </div>
+
+      <!-- ── Step panels ── -->
+
+      <!-- Step 0 · Organization Profile -->
+      <div class="step-panel" id="panel-0">
+        <div class="sl-section-title">Organization Profile</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Organization Name" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Organization Type" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="tel" placeholder="Phone No" /></div>
+          <div class="sl-field"><input class="sl-input" type="email" placeholder="Email Id" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Location" /></div>
+      </div>
+
+      <!-- Step 1 · Territories and Sites -->
+      <div class="step-panel" id="panel-1">
+        <div class="sl-section-title">Territories and Sites</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Territory Name" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Region / Zone" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="City" /></div>
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="Country" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Site Address" /></div>
+      </div>
+
+      <!-- Step 2 · Roles and Employees -->
+      <div class="step-panel" id="panel-2">
+        <div class="sl-section-title">Roles and Employees</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Organization Name" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Organization Type" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="tel" placeholder="Phone No" /></div>
+          <div class="sl-field"><input class="sl-input" type="email" placeholder="Email Id" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Location" /></div>
+      </div>
+
+      <!-- Step 3 · Products and Services -->
+      <div class="step-panel" id="panel-3">
+        <div class="sl-section-title">Products and Services</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Product / Service Name" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Category" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="SKU / Code" /></div>
+          <div class="sl-field"><input class="sl-input" type="number" placeholder="Unit Price ($)" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Description" /></div>
+      </div>
+
+      <!-- Step 4 · Scheduler Settings -->
+      <div class="step-panel" id="panel-4">
+        <div class="sl-section-title">Scheduler Settings</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Default Timezone" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="time" placeholder="Working Hours Start" /></div>
+          <div class="sl-field"><input class="sl-input" type="time" placeholder="Working Hours End" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="number" placeholder="Max Jobs per Day" /></div>
+      </div>
+
+      <!-- Step 5 · Payment Settings -->
+      <div class="step-panel" id="panel-5">
+        <div class="sl-section-title">Payment Settings</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Payment Method" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Bank / Gateway Name" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="Account Number" /></div>
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="Routing Number" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Billing Address" /></div>
+      </div>
+
+      <!-- Step 6 · Create Work Order -->
+      <div class="step-panel" id="panel-6">
+        <div class="sl-section-title">Create Work Order</div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Work Order Title" /></div>
+        <div class="sl-field"><input class="sl-input" type="text" placeholder="Assigned Technician" /></div>
+        <div class="sl-row">
+          <div class="sl-field"><input class="sl-input" type="date" placeholder="Scheduled Date" /></div>
+          <div class="sl-field"><input class="sl-input" type="text" placeholder="Priority (Low / High)" /></div>
+        </div>
+        <div class="sl-field mt-3"><input class="sl-input" type="text" placeholder="Notes / Description" /></div>
+      </div>
+
+      <!-- Footer navigation -->
+      <div class="sl-footer">
+        <button class="btn-nav" id="prevBtn" aria-label="Previous step">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="btn-submit" id="submitBtn">Submit</button>
+        <button class="btn-nav" id="nextBtn" aria-label="Next step">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="sl-toast" id="toast"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ══════════════════════════════════════════
+       VANILLA JAVASCRIPT
+  ══════════════════════════════════════════ -->
+  <script>
+  const TOTAL_STEPS = 7;
+  let currentStep = 0;
+
+  const stepEls = document.querySelectorAll('.sl-step');
+  const panels = document.querySelectorAll('.step-panel');
+  const progressFill = document.getElementById('progressFill');
+  const progressPct = document.getElementById('progressPct');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const toast = document.getElementById('toast');
+
+  function render() {
+    stepEls.forEach((el, i) => {
+      el.classList.toggle('active', i === currentStep);
+      el.classList.toggle('done', i < currentStep);
+    });
+
+    panels.forEach((p, i) => {
+      p.classList.toggle('active', i === currentStep);
+    });
+
+    const pct = Math.round(((currentStep + 1) / TOTAL_STEPS) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+
+    prevBtn.disabled = currentStep === 0;
+    nextBtn.disabled = currentStep === TOTAL_STEPS - 1;
+
+    submitBtn.textContent =
+      currentStep === TOTAL_STEPS - 1 ? 'Finish 🎉' : 'Submit';
+  }
+
+  function goToStep(step) {
+    if (step >= 0 && step < TOTAL_STEPS) {
+      currentStep = step;
+      render();
+    }
+  }
+
+  prevBtn.onclick = () => goToStep(currentStep - 1);
+  nextBtn.onclick = () => goToStep(currentStep + 1);
+
+  stepEls.forEach((el, i) => {
+    el.onclick = () => goToStep(i);
+  });
+
+  submitBtn.onclick = () => {
+    if (currentStep === TOTAL_STEPS - 1) {
+      showToast('🎉 Onboarding complete! Welcome to StarLand.');
+    } else {
+      showToast(`Step ${currentStep + 1} saved! Moving forward…`);
+      goToStep(currentStep + 1);
+    }
+  };
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  render();
+  </script>
+
+</body>
+</html>
